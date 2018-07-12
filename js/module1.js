@@ -12,6 +12,14 @@
         window.library.addListenerTo('#upload-cancel', 'click', onClosed);
         window.library.addListenerToDoc('keydown', onClosed);
     };
+    var onFocusHappend = function () {
+        window.library.removeListenerFromDoc('keydown', onClosed);
+    };
+    var onBlurHappend = function () {
+        window.library.addListenerToDoc('keydown', onClosed);
+    };
 
     window.library.addListenerTo('#upload-file', 'change', onChanged);
+    window.library.addListenerToDoc('focus happend', onFocusHappend);
+    window.library.addListenerToDoc('blur happend', onBlurHappend);
 })();
