@@ -1,27 +1,24 @@
 'use strict';
 
 (function () {
-    var imageCssSelector = '.img-upload__preview';
-    var sliderCssSelector = '.img-upload__scale';
-    var scalePinCssSelector = '.scale__pin';
     var scaleWidth = 453;
-    var elementScalePin = document.querySelector(scalePinCssSelector);
-    var elementImage = document.querySelector(imageCssSelector);
+    var elementScalePin = document.querySelector(window.library.selector.scale.pin);
+    var elementImage = document.querySelector(window.library.selector.imagePreview.self);
 
     var shouldSliderHide = function (effectName) {
         return effectName === 'effects__preview--none';
     };
     var setSlider = function (effectName) {
         if(shouldSliderHide(effectName)) {
-            window.library.addClassName(sliderCssSelector ,'hidden');
+            window.library.addClassName(window.library.selector.slider ,'hidden');
             return;
         } 
-        window.library.removeClassName(sliderCssSelector ,'hidden');
+        window.library.removeClassName(window.library.selector.slider ,'hidden');
     };
     var applyEffect = function (effectName) {
         var oldEffectName = elementImage.className.match(/effects__preview--[0-9a-zA-Z]+/) || '';
-        window.library.removeClassName(imageCssSelector, oldEffectName[0]);;
-        window.library.addClassName(imageCssSelector, effectName);
+        window.library.removeClassName(window.library.selector.imagePreview.self, oldEffectName[0]);;
+        window.library.addClassName(window.library.selector.imagePreview.self, effectName);
     };
     var applyChanges = function (target) {
         var effectName = target.className.match(/effects__preview--[0-9a-zA-Z]+/) || '';
@@ -30,7 +27,7 @@
         window.library.currentEffectName = effectName[0].split('--')[1]; 
     };
     var updateStyles = function () {
-        window.library.removeStyleFrom(imageCssSelector, 'filter');
+        window.library.removeStyleFrom(window.library.selector.imagePreview.self, 'filter');
     };
     var setScalePinBasePosition = function () {
         elementScalePin.style.left = scaleWidth + 'px';
@@ -45,5 +42,5 @@
     };
 
     setScalePinBasePosition();
-    window.library.addListenerTo('.effects__list', 'click', onClicked);
+    window.library.addListenerTo(window.library.selector.effectsList, 'click', onClicked);
 })();

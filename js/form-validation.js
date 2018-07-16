@@ -57,17 +57,20 @@
         }
     };
 
-    var inputHashTagsCssSelector = '.text__hashtags';
-    var inputDescriptionCssSelector = '.text__description';
-    var formUploadCssSelector = '#upload-select-image';
-    var elementInputHashTags = document.querySelector(inputHashTagsCssSelector);
-    var elementInputDescription = document.querySelector(inputDescriptionCssSelector);
+    var elementInputHashTags = document.querySelector(window.library.selector.input.hashTag);
+    var elementInputDescription = document.querySelector(window.library.selector.input.description);
 
-    var setNotice = function () {};
+    var setNotice = function (elementInput, notice) {
+        elementInput.style.border = '5px solid red';
+        
+    };
 
     var validateInputHashTags = function () {
         var notice = '';
         var hashtags = elementInputHashTags.value.split(' ');
+        if(hashtags.length == 1 && hashtags[0] === '') {
+            return notice;
+        }
         Object.keys(validityErrorNameToInputHashTagCheckInstrument).some(function (key) {
             if(validityErrorNameToInputHashTagCheckInstrument[key].checkFunction(hashtags)) {
                 notice = validityErrorNameToInputHashTagCheckInstrument[key].notice;
@@ -86,8 +89,8 @@
         if (inputHashtagsNotice === '' && inputDescriptionNotice === '') {
             return true;
         }
-        setNotice(inputHashtagsNotice);
-        setNotice(inputDescriptionNotice);
+        if(inputHashtagsNotice !== '') setNotice(elementInputHashTags, inputHashtagsNotice);
+        if(inputDescriptionNotice !== '') setNotice(elementInputDescription, inputDescriptionNotice);
         return false;
     };
 
@@ -95,9 +98,13 @@
         evt.preventDefault();
         if(isFormValidity()) {
             sendImage();
+            var event = new Event('form-send');
+            document.dispatchEvent(event);
         }
     };
-    var sendImage = function () {};
+    var sendImage = function () {
+        window.backend.sendPhoto(window.networkHandler.onImageSend, window.networkHandler.onImageSendError);
+    };
 
     var onFocus = function () {
         var event = new Event('focus happend');
@@ -107,7 +114,8 @@
         var event = new Event('blur happend');
         document.dispatchEvent(event);
     };
-    window.library.addListenerTo(inputDescriptionCssSelector, 'focus', onFocus);
-    window.library.addListenerTo(inputDescriptionCssSelector, 'blur', onBlur);
-    window.library.addListenerTo(formUploadCssSelector, 'submit', onSubmit);
+
+    window.library.addListenerTo(window.library.selector.input.description, 'focus', onFocus);
+    window.library.addListenerTo(window.library.selector.input.description, 'blur', onBlur);
+    window.library.addListenerTo(window.library.selector.postForm, 'submit', onSubmit);
 })();

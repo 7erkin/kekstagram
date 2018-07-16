@@ -1,14 +1,11 @@
 'use strict';
 
 (function () {
-    var imageCssSelector = '.img-upload__preview';
-    var elementImage = document.querySelector(imageCssSelector);
-    var scalePinCssSelector = '.scale__pin';
-    var scaleValueSelector = '.scale__value';
-    var scaleLineSelector = '.scale__line';
-    var elementScaleValue = document.querySelector(scaleValueSelector);
-    var elementScalePin = document.querySelector(scalePinCssSelector);
-    var scaleWidth = 453;
+    var elementImage = document.querySelector(window.library.selector.imagePreview.self);
+    var elementScaleValue = document.querySelector(window.library.selector.scale.value);
+    var elementScaleLevel = document.querySelector(window.library.selector.scale.level);
+    var elementScalePin = document.querySelector(window.library.selector.scale.pin);
+    var SCALE_WIDTH = 453;
     var effectNameToStyleOption = {
         chrome: {
             styleName: 'grayscale',
@@ -63,11 +60,11 @@
         };
     };
 
-    var setScaleValue = function (nextScalePinCoord) {
-        elementScaleValue.setAttribute('value', (nextScalePinCoord / scaleWidth) * 100);
+    var setLevel = function (nextScalePinCoord) {
+        elementScaleLevel.style.width = (nextScalePinCoord / SCALE_WIDTH) * 100 + '%';
     };
     var isScalePinMoveAvailable = function (nextScalePinCoords) {
-        return (nextScalePinCoords.x  < parseInt(scaleWidth, 10)) && (nextScalePinCoords.x  >= 0);
+        return (nextScalePinCoords.x  < parseInt(SCALE_WIDTH, 10)) && (nextScalePinCoords.x  >= 0);
     };
     var applyShift = function (shift) {
         var currentScalePinCoords = getScalePinCoords();
@@ -76,7 +73,7 @@
         };
         if(isScalePinMoveAvailable(nextScalePinCoords)) {
             elementScalePin.style.left = nextScalePinCoords.x + 'px';
-            setScaleValue(nextScalePinCoords.x);
+            setLevel(nextScalePinCoords.x);
             setImageStyle(nextScalePinCoords.x);
         }
     };
@@ -102,13 +99,13 @@
         var styleName = effectNameToStyleOption[window.library.currentEffectName].styleName;
         var styleValue = effectNameToStyleOption[window.library.currentEffectName].min + 
             (effectNameToStyleOption[window.library.currentEffectName].max -
-            effectNameToStyleOption[window.library.currentEffectName].min) * (nextScalePinCoord / scaleWidth);
+            effectNameToStyleOption[window.library.currentEffectName].min) * (nextScalePinCoord / SCALE_WIDTH);
         return styleName + '(' + styleValue + effectNameToStyleOption[window.library.currentEffectName].scale + ')';
     };
     var setImageStyle = function (nextScalePinCoord) {
         var styleValue = getStyleValue(nextScalePinCoord);
-        window.library.addStyleTo(imageCssSelector, 'filter', styleValue);
+        window.library.addStyleTo(window.library.selector.imagePreview.self, 'filter', styleValue);
     };
     
-    window.library.addListenerTo(scalePinCssSelector, 'mousedown', onMouseDown);
+    window.library.addListenerTo(window.library.selector.scale.pin, 'mousedown', onMouseDown);
 })();

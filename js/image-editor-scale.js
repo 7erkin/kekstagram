@@ -8,8 +8,8 @@
         minus: -1,
         plus: 1
     };
-    var elementImage = document.querySelector('.img-upload__preview');
-    var elementResizeValue = document.querySelector('.resize__control--value');
+    var elementImage = document.querySelector(window.library.selector.imagePreview.self);
+    var elementResizeValue = document.querySelector(window.library.selector.scale.value);
     var changeResizeValue = function (value) {
         var nextValue = parseInt(elementResizeValue.value, 10) + value;
         if(nextValue >= 25 && nextValue <= 100) {
@@ -22,6 +22,6 @@
         changeResizeValue(addictionalValue);
     };
 
-    window.library.addListenerTo('.resize__control--minus', 'click', onClicked);
-    window.library.addListenerTo('.resize__control--plus', 'click', onClicked);
+    window.library.addListenerTo(window.library.selector.scale.valueMinus, 'click', onClicked);
+    window.library.addListenerTo(window.library.selector.scale.valuePlus, 'click', onClicked);
 })();

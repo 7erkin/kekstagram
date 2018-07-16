@@ -136,16 +136,8 @@
             <p class="social__caption">Тестим новую камеру! =)</p>
             <p class="social__likes">Нравится <span class="likes-count">356</span></p>
           </div>
-          <div class="social__comment-count">5 из <span class="comments-count">125</span> комментариев</div>
+          <div class="social__comment-count"> <span class="current-stat">5</span> из <span class="comments-count">125</span> комментариев</div>
           <ul class="social__comments">
-            <li class="social__comment">
-              <img class="social__picture" src="img/avatar-4.svg" alt="Аватар комментатора фотографии" width="35" height="35">
-              <p class="social__text">Мега фото! Просто обалдеть. Как вам так удалось?</p>
-            </li>
-            <li class="social__comment">
-              <img class="social__picture" src="img/avatar-3.svg" alt="Аватар комментатора фотографии" width="35" height="35">
-               <p class="social__text">Да это фоташоп!!!!!!!!</p>
-            </li>
           </ul>
           <button class="social__loadmore" type="button">Загрузить еще</button>
           <div class="social__footer">
@@ -199,7 +191,12 @@
 
     <div class="img-upload__message img-upload__message--processing hidden">Кексограмим...</div>
 
-    <div class="img-upload__message img-upload__message--error error hidden">Ошибка загрузки файла
+    <li class="social__comment">
+      <img class="social__picture" src="img/avatar-4.svg" alt="Аватар комментатора фотографии" width="35" height="35">
+      <p class="social__text"></p>
+    </li>
+
+    <div id="#error-message" class="img-upload__message img-upload__message--error error hidden">Ошибка загрузки файла
       <div class="error__links">
         <a class="error__link" href="#">Попробовать снова</a>
         <a class="error__link" href="#">Загрузить другой файл</a>
@@ -208,11 +205,16 @@
   </template>
 
   <script src="js/library.js"></script>
-  <script src="js/module1.js"></script>
-  <script src="js/module2-1.js"></script>
-  <script src="js/module2-2.js"></script>
-  <script src="js/module2-2-1.js"></script>
-  <script src="js/module2-3.js"></script>
+  <script src="js/backend.js"></script>
+  <script src="js/data-storage.js"></script>
+  <script src="js/photo-renderer.js"></script>
+  <script src="js/network-handler.js"></script>
+  <script src="js/form-action.js"></script>
+  <script src="js/image-editor-slider.js"></script>
+  <script src="js/form-validation.js"></script>
+  <script src="js/image-editor-scale.js"></script>
+  <script src="js/image-editor.js"></script>
+  <script src="js/picture-filtration.js"></script>
 
 </body>
 </html>
