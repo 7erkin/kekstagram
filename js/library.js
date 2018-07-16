@@ -7,11 +7,11 @@
         ENTER: 13
     };
     window.library.currentEffectName = '';
-    window.library.removeClassName = function (cssSelector, className) {
+    window.library.removeClassFrom = function (cssSelector, className) {
         var element = document.querySelector(cssSelector);
         element.classList.remove(className);
     };
-    window.library.addClassName = function (cssSelector, className) {
+    window.library.addClassTo = function (cssSelector, className) {
         var element = document.querySelector(cssSelector);
         element.classList.add(className);
     };
@@ -42,6 +42,7 @@
         element.setAttribute('style', '');
     };
 
+    window.library.SCALE_WIDTH = 453;
     window.library.selector = {
         postForm: '#upload-select-image',
         formClose: '#upload-cancel',

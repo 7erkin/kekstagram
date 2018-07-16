@@ -4,7 +4,7 @@
     var QUANTITY_NEW_PICTURE = 10;
     var DELAY = 500;
 
-    var pictures = window.dataStorage.transform.downloadedPictures;
+    var pictures = window.dataStorage.transformPictures;
     var filterSelector = window.library.selector.filter;
     var activeFilterClass = filterSelector.activeFilter.split('.')[1];
     var timerId;
@@ -13,14 +13,14 @@
 
     var filterIdToFiltrationFunction = {
         'filter-popular': function () {
-            window.dataStorage.transform.downloadedPictures = window.dataStorage.original.downloadedPictures.slice();
+            window.dataStorage.transformPictures = window.dataStorage.originalPictures.slice();
         },
         'filter-new': function () {
-            window.dataStorage.transform.downloadedPictures = window.dataStorage.original.downloadedPictures.slice(0, QUANTITY_NEW_PICTURE);
+            window.dataStorage.transformPictures = window.dataStorage.originalPictures.slice(0, QUANTITY_NEW_PICTURE);
         },
         'filter-discussed': function () {
-            window.dataStorage.transform.downloadedPictures = window.dataStorage.original.downloadedPictures.slice();
-            window.dataStorage.transform.downloadedPictures.sort(function (picture1, picture2) {
+            window.dataStorage.transformPictures = window.dataStorage.originalPictures.slice();
+            window.dataStorage.transformPictures.sort(function (picture1, picture2) {
                 return -picture1.comments.length + picture2.comments.length;
             });
         }

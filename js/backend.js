@@ -6,7 +6,7 @@
     var elementPostForm = document.querySelector(window.library.selector.postForm);
 
     window.backend = {};
-    window.backend.downloadImages = function (onLoad, onError) {
+    window.backend.downloadPictures = function (onLoad, onError) {
         var xhr = new XMLHttpRequest();
         xhr.addEventListener('load', onLoad);
         xhr.addEventListener('error', onError);
@@ -16,7 +16,7 @@
 
         xhr.send();
     };
-    window.backend.sendPhoto = function (onLoad, onError) {
+    window.backend.sendPicture = function (onLoad, onError) {
         var xhr = new XMLHttpRequest();
         xhr.addEventListener('load', onLoad);
         xhr.addEventListener('error', onError);

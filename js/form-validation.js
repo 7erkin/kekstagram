@@ -97,13 +97,13 @@
     var onSubmit = function (evt) {
         evt.preventDefault();
         if(isFormValidity()) {
-            sendImage();
+            sendPicture();
             var event = new Event('form-send');
             document.dispatchEvent(event);
         }
     };
-    var sendImage = function () {
-        window.backend.sendPhoto(window.networkHandler.onImageSend, window.networkHandler.onImageSendError);
+    var sendPicture = function () {
+        window.backend.sendPicture(window.networkHandler.onImageSend, window.networkHandler.onImageSendError);
     };
 
     var onFocus = function () {

@@ -1,50 +1,50 @@
 'use strict';
 
 (function () {
-    var elementImage = document.querySelector(window.library.selector.imagePreview.self);
-    var elementScaleValue = document.querySelector(window.library.selector.scale.value);
-    var elementScaleLevel = document.querySelector(window.library.selector.scale.level);
-    var elementUploadFile = document.querySelector(window.library.selector.fileUpload);
-    var elementHashTagInput = document.querySelector(window.library.selector.input.hashTag);
-    var elementDescriptionInput = document.querySelector(window.library.selector.input.description);
+    var library = window.library;
+    var selector = library.selector;
 
-    var flushInBaseCondition = function () {
+    var elementImage = document.querySelector(selector.imagePreview.self);
+    var elementScaleValue = document.querySelector(selector.scale.value);
+    var elementScaleLevel = document.querySelector(selector.scale.level);
+    var elementUploadFile = document.querySelector(selector.fileUpload);
+    var elementHashTagInput = document.querySelector(selector.input.hashTag);
+    var elementDescriptionInput = document.querySelector(selector.input.description);
+
+    var flushPageInBaseCondition = function () {
         var effectName = elementImage.className.match(/effects__preview--[^ ]+/);
-        if(effectName instanceof Array) window.library.removeClassName(window.library.selector.imagePreview.self, effectName[0]);
-        window.library.flushStyle(window.library.selector.imagePreview.self);
+        if(effectName instanceof Array) library.removeClassFrom(selector.imagePreview.self, effectName[0]);
+        library.flushStyle(selector.imagePreview.self);
         elementScaleValue.value = '100%';
         elementUploadFile.value = '';
         elementScaleLevel.style.width = '100%';
-        window.library.addClassName(window.library.selector.slider, 'hidden');
-        window.library.removeClassName(window.library.selector.imagePreview.self, effectName);
-        window.library.addClassName(window.library.selector.overlay, 'hidden');
+        library.addClassTo(selector.slider, 'hidden');
+        library.removeClassFrom(selector.imagePreview.self, effectName);
+        library.addClassTo(selector.overlay, 'hidden');
     };
     var onClosed = function (evt) {
         evt.preventDefault();
         evt.stopPropagation();
-        if(!(evt.keyCode === window.library.keyCode.ESC || evt.keyCode === undefined)) return;
-        flushInBaseCondition();
-        window.library.removeListenerFrom(window.library.selector.formClose, 'click', onClosed);
-        window.library.removeListenerFromDoc('keydown', onClosed);
+        if(!(evt.keyCode === library.keyCode.ESC || evt.keyCode === undefined)) return;
+        flushPageInBaseCondition();
+        library.removeListenerFrom(selector.formClose, 'click', onClosed);
+        library.removeListenerFromDoc('keydown', onClosed);
     };
     var onChanged = function () {
-        window.library.removeClassName(window.library.selector.overlay, 'hidden');
-        window.library.addListenerTo(window.library.selector.formClose, 'click', onClosed);
-        window.library.addListenerToDoc('keydown', onClosed);
+        library.removeClassFrom(selector.overlay, 'hidden');
+        library.addListenerTo(selector.formClose, 'click', onClosed);
+        library.addListenerToDoc('keydown', onClosed);
     };
     var onFocusHappend = function () {
-        window.library.removeListenerFromDoc('keydown', onClosed);
+        library.removeListenerFromDoc('keydown', onClosed);
     };
     var onBlurHappend = function () {
-        window.library.addListenerToDoc('keydown', onClosed);
-    };
-    var downloadImages = function () {
-        window.backend.downloadImages(window.networkHandler.onImagesDownloaded, window.networkHandler.onImagesDownloadedError);
+        library.addListenerToDoc('keydown', onClosed);
     };
 
-    downloadImages();
-    window.library.addListenerToDoc('form-send', onClosed);
-    window.library.addListenerTo(window.library.selector.fileUpload, 'change', onChanged);
-    window.library.addListenerToDoc('focus happend', onFocusHappend);
-    window.library.addListenerToDoc('blur happend', onBlurHappend);
+    window.backend.downloadPictures(window.networkHandler.onImagesDownloaded, window.networkHandler.onImagesDownloadedError);
+    library.addListenerToDoc('form-send', onClosed);
+    library.addListenerTo(selector.fileUpload, 'change', onChanged);
+    library.addListenerToDoc('focus happend', onFocusHappend);
+    library.addListenerToDoc('blur happend', onBlurHappend);
 })();

@@ -10,10 +10,10 @@
         var xhr = evt.target;
         switch (xhr.status) {
             case 200:
-                window.dataStorage.original.downloadedPictures = xhr.response;
-                window.dataStorage.transform.downloadedPictures = xhr.response;
+                window.dataStorage.originalPictures = xhr.response;
+                window.dataStorage.transformPictures = xhr.response;
                 window.photoRenderer.render();
-                window.library.removeClassName(cssSelector, cssSelector.split('.')[1]);
+                window.library.removeClassFrom(cssSelector, cssSelector.split('.')[1]);
                 break;
             default:
                 break;
