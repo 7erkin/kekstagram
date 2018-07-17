@@ -78,6 +78,10 @@
                 self: '.social__comment',
                 avatar: '.social__picture',
                 text: '.social__text'
+            },
+            errorNotice: {
+                self: '#notice',
+                text: '#notice > h1'
             }
         },
         bigPicture: {

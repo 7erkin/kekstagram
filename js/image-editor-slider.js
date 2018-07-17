@@ -6,7 +6,6 @@
     var elementScaleValue = document.querySelector(library.selector.scale.value);
     var elementScaleLevel = document.querySelector(library.selector.scale.level);
     var elementScalePin = document.querySelector(library.selector.scale.pin);
-    var SCALE_WIDTH = 453;
     var effectNameToStyleOption = {
         chrome: {
             styleName: 'grayscale',
@@ -49,10 +48,10 @@
     };
 
     var setLevel = function (nextScalePinCoord) {
-        elementScaleLevel.style.width = (nextScalePinCoord / SCALE_WIDTH) * 100 + '%';
+        elementScaleLevel.style.width = (nextScalePinCoord / window.library.SCALE_WIDTH) * 100 + '%';
     };
     var isScalePinMoveAvailable = function (nextPinXCoord) {
-        return (nextPinXCoord  < parseInt(SCALE_WIDTH, 10)) && (nextPinXCoord  >= 0);
+        return (nextPinXCoord  < parseInt(window.library.SCALE_WIDTH, 10)) && (nextPinXCoord  >= 0);
     };
     var applyShift = function (shift) {
         var currentPinXCoord = getPinXCoord();
@@ -85,7 +84,7 @@
         var styleName = effectNameToStyleOption[library.currentEffectName].styleName;
         var styleValue = effectNameToStyleOption[library.currentEffectName].min + 
             (effectNameToStyleOption[library.currentEffectName].max -
-            effectNameToStyleOption[library.currentEffectName].min) * (nextScalePinCoord / SCALE_WIDTH);
+            effectNameToStyleOption[library.currentEffectName].min) * (nextScalePinCoord / window.library.SCALE_WIDTH);
         return styleName + '(' + styleValue + effectNameToStyleOption[library.currentEffectName].scale + ')';
     };
     var setImageStyle = function (nextScalePinCoord) {

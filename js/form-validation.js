@@ -1,10 +1,13 @@
 'use strict';
 
 (function () {
+    var INVALID_INPUT_CLASSNAME = 'invalid-input';
     var QUANTITY_HASHTAG = 5;
     var MAX_HASHTAG_LENGTH = 20;
     var LIMIT_CHARACTERS_IN_DESCRIPTION = 140;
     var NOTICE_FOR_DESCRIPTION = 'количество символов не больше ' + LIMIT_CHARACTERS_IN_DESCRIPTION;
+    var template = document.querySelector(window.library.selector.template.self);
+    var templateNotice = template.content.querySelector(window.library.selector.template.errorNotice.self);
     var validityErrorNameToInputHashTagCheckInstrument = {
         NOT_SHARP_BEGIN: {
             notice: 'хештег начинается с #',
@@ -48,7 +51,7 @@
             }
         },
         HASHTAG_LENGTH_INCREASED: {
-            notice: 'длина хештега не превышает ' + MAX_HASHTAG_LENGTH + 'символов',
+            notice: 'длина хештега не превышает ' + MAX_HASHTAG_LENGTH + ' символов',
             checkFunction: function (hashtags) {
                 return hashtags.some(function (hashtag) {
                     return hashtag.length > 20;
@@ -60,9 +63,29 @@
     var elementInputHashTags = document.querySelector(window.library.selector.input.hashTag);
     var elementInputDescription = document.querySelector(window.library.selector.input.description);
 
+    var flushAllNotices = function () {
+        var elementsNotices = document.querySelectorAll(window.library.selector.template.errorNotice.self);
+        Array.prototype.forEach.call(elementsNotices, function (elementNotice) {
+            elementNotice.remove();
+        });
+        elementInputDescription.classList.remove(INVALID_INPUT_CLASSNAME);
+        elementInputHashTags.classList.remove(INVALID_INPUT_CLASSNAME);
+    };
+    var embedNotice = function (elementInput, noticeNode) {
+        if(elementInput.classList[0] === 'text__hashtags') {
+            var element = document.querySelector('.text__description');
+            elementInput.parentElement.insertBefore(noticeNode, element);
+        }
+        if(elementInput.classList[0] === 'text__description') {
+            elementInput.parentElement.appendChild(noticeNode);
+        }
+    };
     var setNotice = function (elementInput, notice) {
-        elementInput.style.border = '5px solid red';
-        
+        elementInput.classList.add(INVALID_INPUT_CLASSNAME);
+        var elementNotice = templateNotice.cloneNode(true);
+        elementNotice.querySelector(window.library.selector.template.errorNotice.text);
+        elementNotice.textContent = notice;
+        embedNotice(elementInput, elementNotice);
     };
 
     var validateInputHashTags = function () {
@@ -84,6 +107,7 @@
         return elementInputDescription.value.length > LIMIT_CHARACTERS_IN_DESCRIPTION ? NOTICE_FOR_DESCRIPTION : '';
     };
     var isFormValidity = function () {
+        flushAllNotices();
         var inputHashtagsNotice = validateInputHashTags();
         var inputDescriptionNotice = validateInputDescription();
         if (inputHashtagsNotice === '' && inputDescriptionNotice === '') {

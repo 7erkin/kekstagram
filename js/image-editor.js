@@ -5,6 +5,7 @@
     var selector = library.selector;
     var elementScalePin = document.querySelector(selector.scale.pin);
     var elementImage = document.querySelector(selector.imagePreview.self);
+    var elementScaleLevel = document.querySelector(selector.scale.level);
 
     var shouldSliderHide = function (effectName) {
         return effectName === 'effects__preview--none';
@@ -31,6 +32,7 @@
         library.removeStyleFrom(selector.imagePreview.self, 'filter');
     };
     var setScalePinBasePosition = function () {
+        elementScaleLevel.style.width = '100%';
         elementScalePin.style.left = library.SCALE_WIDTH + 'px';
     };
     var onClicked = function (evt) {
