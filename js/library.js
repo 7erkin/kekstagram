@@ -41,6 +41,12 @@
         var element = document.querySelector(cssSelector);
         element.setAttribute('style', '');
     };
+    window.library.prepareTextValueForSend = function (text) {
+        var newText = text.replace(/[ ]+/g, ' ')
+                          .replace(/^ /, '')
+                          .replace(/ $/,'');
+        return newText;
+    };
 
     window.library.SCALE_WIDTH = 453;
     window.library.selector = {
@@ -81,7 +87,7 @@
             },
             errorNotice: {
                 self: '#notice',
-                text: '#notice > h1'
+                text: '#notice > p'
             }
         },
         bigPicture: {
