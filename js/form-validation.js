@@ -1,11 +1,20 @@
 'use strict';
 
 (function () {
+    var library = window.library;
+    var selector = library.selector;
+
+    var elementImage = document.querySelector(selector.imagePreview.self);
+    var elementScaleValue = document.querySelector(selector.scale.value);
+    var elementScaleLevel = document.querySelector(selector.scale.level);
+    var elementUploadFile = document.querySelector(selector.fileUpload);
+    var elementHashTagInput = document.querySelector(selector.input.hashTag);
+    var elementDescriptionInput = document.querySelector(selector.input.description);
     var INVALID_INPUT_CLASSNAME = 'invalid-input';
     var QUANTITY_HASHTAG = 5;
     var MAX_HASHTAG_LENGTH = 20;
     var LIMIT_CHARACTERS_IN_DESCRIPTION = 140;
-    var NOTICE_FOR_DESCRIPTION = 'количество символов не больше ' + LIMIT_CHARACTERS_IN_DESCRIPTION;
+    var NOTICE_FOR_DESCRIPTION = 'количество символов не может быть больше ' + LIMIT_CHARACTERS_IN_DESCRIPTION;
     var template = document.querySelector(window.library.selector.template.self);
     var templateNotice = template.content.querySelector(window.library.selector.template.errorNotice.self);
     var inputHashTagValidity = true;
@@ -13,7 +22,7 @@
     var timerId;
     var validityErrorNameToInputHashTagCheckInstrument = {
         NOT_SHARP_BEGIN: {
-            notice: 'хештег должен начинать с символа #',
+            notice: 'хештег должен начинаться с символа #',
             checkFunction: function (hashtags) {
                 return hashtags.some(function (hashtag) {
                     return hashtag[0] !== '#';
@@ -116,16 +125,16 @@
         return inputHashTagValidity && inputDescriptionValidity;
     };
     var prepareFormValue = function () {
-        elementInputHashTags.value = window.library.prepareTextValueForSend(elementInputHashTags.value);
-        elementInputDescription.value = window.library.prepareTextValueForSend(elementInputDescription.value);
+        var text = window.library.prepareTextValueForSend(elementHashTagInput.value);
+        elementHashTagInput.value = text;
+        text = window.library.prepareTextValueForSend(elementDescriptionInput.value);
+        elementDescriptionInput.value = text;
     };
     var onSubmit = function (evt) {
         evt.preventDefault();
         if(isFormValidity()) {
-            sendPicture();
             prepareFormValue();
-            var event = new Event('form-send');
-            document.dispatchEvent(event);
+            sendPicture();
         }
     };
     var sendPicture = function () {
@@ -181,10 +190,22 @@
             }
         }, 500);
     };
+    var resetInputs = function () {
+        elementScaleValue.value = '100%';
+        elementUploadFile.value = '';
+        elementScaleLevel.style.width = '100%';
+        elementHashTagInput.value = '';
+        elementDescriptionInput.value = '';
+    };
+    var onReset = function () {
+        flushAllNotices();
+        resetInputs();
+    };
 
     window.library.addListenerTo(window.library.selector.input.description, 'focus', onFocus);
     window.library.addListenerTo(window.library.selector.input.description, 'blur', onBlur);
     window.library.addListenerTo(window.library.selector.input.description, 'input', onChanged);
     window.library.addListenerTo(window.library.selector.input.hashTag, 'input', onChanged);
     window.library.addListenerTo(window.library.selector.postForm, 'submit', onSubmit);
+    window.library.addListenerToDoc('reset form', onReset);
 })();

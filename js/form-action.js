@@ -5,24 +5,19 @@
     var selector = library.selector;
 
     var elementImage = document.querySelector(selector.imagePreview.self);
-    var elementScaleValue = document.querySelector(selector.scale.value);
-    var elementScaleLevel = document.querySelector(selector.scale.level);
-    var elementUploadFile = document.querySelector(selector.fileUpload);
-    var elementHashTagInput = document.querySelector(selector.input.hashTag);
-    var elementDescriptionInput = document.querySelector(selector.input.description);
 
     var flushPageInBaseCondition = function () {
         var effectName = elementImage.className.match(/effects__preview--[^ ]+/);
         if(effectName instanceof Array) library.removeClassFrom(selector.imagePreview.self, effectName[0]);
         library.flushStyle(selector.imagePreview.self);
-        elementScaleValue.value = '100%';
-        elementUploadFile.value = '';
-        elementScaleLevel.style.width = '100%';
-        elementHashTagInput.value = '';
-        elementDescriptionInput.value = '';
+        genEventResetForm();
         library.addClassTo(selector.slider, 'hidden');
         library.removeClassFrom(selector.imagePreview.self, effectName);
         library.addClassTo(selector.overlay, 'hidden');
+    };
+    var genEventResetForm = function () {
+        var event = new Event('reset form');
+        document.dispatchEvent(event);
     };
     var onClosed = function (evt) {
         if(!(evt.keyCode === library.keyCode.ESC || evt.keyCode === undefined)) return;

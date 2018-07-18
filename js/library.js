@@ -63,7 +63,8 @@
         filters: '.img-filters',
         input: {
             hashTag: '.text__hashtags',
-            description: '.text__description'
+            description: '.text__description',
+            effectLevel: '[name="effect-level"]'
         },
         scale: {
             value: '.resize__control--value',

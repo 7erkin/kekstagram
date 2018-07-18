@@ -6,6 +6,7 @@
     var elementScaleValue = document.querySelector(library.selector.scale.value);
     var elementScaleLevel = document.querySelector(library.selector.scale.level);
     var elementScalePin = document.querySelector(library.selector.scale.pin);
+    var elementEffectValue = document.querySelector(library.selector.input.effectLevel);
     var effectNameToStyleOption = {
         chrome: {
             styleName: 'grayscale',
@@ -50,6 +51,10 @@
     var setLevel = function (nextScalePinCoord) {
         elementScaleLevel.style.width = (nextScalePinCoord / window.library.SCALE_WIDTH) * 100 + '%';
     };
+    var setEffectValue = function (nextScalePinCoord) {
+        console.log(elementEffectValue);
+        elementEffectValue.setAttribute('value', nextScalePinCoord / window.library.SCALE_WIDTH * 100);
+    }
     var isScalePinMoveAvailable = function (nextPinXCoord) {
         return (nextPinXCoord  < parseInt(window.library.SCALE_WIDTH, 10)) && (nextPinXCoord  >= 0);
     };
@@ -59,6 +64,7 @@
         if(isScalePinMoveAvailable(nextPinXCoord)) {
             elementScalePin.style.left = nextPinXCoord + 'px';
             setLevel(nextPinXCoord);
+            setEffectValue(nextPinXCoord);
             setImageStyle(nextPinXCoord);
         }
     };

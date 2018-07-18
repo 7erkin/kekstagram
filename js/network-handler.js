@@ -4,7 +4,10 @@
     var cssSelector = '.img-filters--inactive';
 
     window.networkHandler = {};
-    window.networkHandler.onImageSend = function (evt) {};
+    window.networkHandler.onImageSend = function (evt) {
+        var event = new Event('form-send');
+        document.dispatchEvent(event);
+    };
     window.networkHandler.onImageSendError = function (evt) {};
     window.networkHandler.onImagesDownloaded = function (evt) {
         var xhr = evt.target;
