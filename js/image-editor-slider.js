@@ -43,21 +43,35 @@
     var getShift = function (coords1, coords2) {
         return coords1 - coords2;
     };
-
     var getPinXCoord = function () {
         return elementScalePin.offsetLeft;
     };
-
+    /**
+     * @description Устанавливает стили элемента уровня эффекта
+     * @param {Number} nextScalePinCoord
+     */
     var setLevel = function (nextScalePinCoord) {
         elementScaleLevel.style.width = (nextScalePinCoord / window.library.SCALE_WIDTH) * 100 + '%';
     };
+    /**
+     * @description Устанавливает величину эффекта
+     * @param {Number} nextScalePinCoord
+     */
     var setEffectValue = function (nextScalePinCoord) {
-        console.log(elementEffectValue);
         elementEffectValue.setAttribute('value', nextScalePinCoord / window.library.SCALE_WIDTH * 100);
-    }
+    };
+    /**
+     * @description Определяет, можно ли передвигать ползунок слайдера
+     * @param {Number} nextPinXCoord
+     * @returns
+     */
     var isScalePinMoveAvailable = function (nextPinXCoord) {
         return (nextPinXCoord  < parseInt(window.library.SCALE_WIDTH, 10)) && (nextPinXCoord  >= 0);
     };
+    /**
+     * @description Применяет новый значения к элементам, согласно координатам ползунка слайдера.
+     * @param {Number} shift
+     */
     var applyShift = function (shift) {
         var currentPinXCoord = getPinXCoord();
         var nextPinXCoord = currentPinXCoord - shift;
@@ -68,6 +82,7 @@
             setImageStyle(nextPinXCoord);
         }
     };
+
     var onMouseDown = function (evt) {
         evt.preventDefault();
         var startXCoord = evt.clientX;
@@ -86,15 +101,24 @@
         library.addListenerToDoc('mousemove', onMouseMove);
         library.addListenerToDoc('mouseup', onMouseUp)
     };
-    var getStyleValue = function (nextScalePinCoord) {
+    /**
+     * @description Вычисляет значение стиля filter.
+     * @param {Number} nextScalePinCoord
+     * @return {String}
+     */
+    var getFilterValue = function (nextScalePinCoord) {
         var styleName = effectNameToStyleOption[library.currentEffectName].styleName;
         var styleValue = effectNameToStyleOption[library.currentEffectName].min + 
             (effectNameToStyleOption[library.currentEffectName].max -
             effectNameToStyleOption[library.currentEffectName].min) * (nextScalePinCoord / window.library.SCALE_WIDTH);
         return styleName + '(' + styleValue + effectNameToStyleOption[library.currentEffectName].scale + ')';
     };
+    /**
+     * @description Устанавливает стили на изображение.
+     * @param {Number} nextScalePinCoord
+     */
     var setImageStyle = function (nextScalePinCoord) {
-        var styleValue = getStyleValue(nextScalePinCoord);
+        var styleValue = getFilterValue(nextScalePinCoord);
         library.addStyleTo(library.selector.imagePreview.self, 'filter', styleValue);
     };
     

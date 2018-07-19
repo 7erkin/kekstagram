@@ -74,7 +74,9 @@
 
     var elementInputHashTags = document.querySelector(window.library.selector.input.hashTag);
     var elementInputDescription = document.querySelector(window.library.selector.input.description);
-
+    /**
+     * @description Удаляет все узлы "ошибки валидации", которые были добавлены ранее.
+     */
     var flushAllNotices = function () {
         var elementsNotices = document.querySelectorAll(window.library.selector.template.errorNotice.self);
         Array.prototype.forEach.call(elementsNotices, function (elementNotice) {
@@ -83,6 +85,11 @@
         elementInputDescription.classList.remove(INVALID_INPUT_CLASSNAME);
         elementInputHashTags.classList.remove(INVALID_INPUT_CLASSNAME);
     };
+    /**
+     * @description Встаривает узел ошибки валидации в дерево.
+     * @param {HTMLElement} elementInput Элемент формы, которое было заполнено невалидно
+     * @param {HTMLDivElement} noticeNode Узел, который добавляется в дерево
+     */
     var embedNotice = function (elementInput, noticeNode) {
         if(elementInput.classList[0] === 'text__hashtags') {
             var element = document.querySelector('.text__description');
@@ -92,6 +99,11 @@
             elementInput.parentElement.appendChild(noticeNode);
         }
     };
+    /**
+     * @description Показывает сообщение пользователю, если он неверно заполнил поле ввода.
+     * @param {HTMLElement} elementInput Невалидно заполненное поле ввода.
+     * @param {HTMLDivElement} notice Сообщение ошибки ввода.
+     */
     var setNotice = function (elementInput, notice) {
         elementInput.classList.add(INVALID_INPUT_CLASSNAME);
         var elementNotice = templateNotice.cloneNode(true);
@@ -99,7 +111,10 @@
         elementNotice.textContent = notice;
         embedNotice(elementInput, elementNotice);
     };
-
+    /**
+     * @description Осуществляет проверку валидности поля ввода хештегов.
+     * @return {String} notice Сообщение ошибки (пустая строка, если поле ввода заполнено валидно).
+     */
     var validateInputHashTags = function () {
         var notice = '';
         var hashtags = elementInputHashTags.value.split(' ').filter(function (hashtag) {
@@ -117,19 +132,33 @@
         });
         return notice;
     };
+    /**
+     * @description Осуществляет проверку валидности поля ввода описания загружаемой картинки.
+     * @return {Boolean}
+     */
     var validateInputDescription = function () { 
         return elementInputDescription.value.length > LIMIT_CHARACTERS_IN_DESCRIPTION ? NOTICE_FOR_DESCRIPTION : '';
     };
-
+    /**
+     * @description Получает результат валидности заполнения формы, перед её отправкой.
+     * @return {Boolean}
+     */
     var isFormValidity = function () {
         return inputHashTagValidity && inputDescriptionValidity;
     };
+    /**
+     * @description Подготавливает значения полей ввода для отправки на сервер.
+     */
     var prepareFormValue = function () {
         var text = window.library.prepareTextValueForSend(elementHashTagInput.value);
         elementHashTagInput.value = text;
         text = window.library.prepareTextValueForSend(elementDescriptionInput.value);
         elementDescriptionInput.value = text;
     };
+    /**
+     * @description Обработчик на событие "submit".
+     * @param {Event} evt
+     */
     var onSubmit = function (evt) {
         evt.preventDefault();
         if(isFormValidity()) {
@@ -137,14 +166,23 @@
             sendPicture();
         }
     };
+    /**
+     * @description Отправляет данные на сервер
+     */
     var sendPicture = function () {
         window.backend.sendPicture(window.networkHandler.onImageSend, window.networkHandler.onImageSendError);
     };
-
+    /**
+     * @description Обработчик события "Фокус на поле description". 
+     */
     var onFocus = function () {
         var event = new Event('focus happend');
         document.dispatchEvent(event);
     };
+    /**
+     * @description Удаляет сообщение об ошибки валидации, установленное ранее для переданного в функцию поля ввода.
+     * @param {HTMLElement} elementInput поле ввода, у которой нужно удалить сообщение ошибки
+     */
     var flushNotice = function (elementInput) {
         var potentialNoticeNode = elementInput.nextElementSibling;
         if(potentialNoticeNode !== null && potentialNoticeNode.id === 'notice') {
@@ -152,6 +190,11 @@
             elementInput.classList.remove(INVALID_INPUT_CLASSNAME);
         }
     };
+    /**
+     * @description Валидирует элемент формы. 
+     * @param {HTMLElement} element
+     * @param {String} elementClassName
+     */
     var validateFormElement = function (element, elementClassName) {
         if(elementClassName === 'text__description') {
             var notice = validateInputDescription();
@@ -172,11 +215,17 @@
             }
         }
     };
-
+    /**
+     * @description Обработчик на событие "Фокус на поле description".
+     */
     var onBlur = function () {
         var event = new Event('blur happend');
         document.dispatchEvent(event);
     };
+    /**
+     * @description Обработчик на событие "Значение в поле ввода формы изменилось".
+     * @param {Event} evt
+     */
     var onChanged = function (evt) {
         clearTimeout(timerId);
         setTimeout(function () {
@@ -190,6 +239,9 @@
             }
         }, 500);
     };
+    /**
+     * @description Сброс значений полей ввода формы.
+     */
     var resetInputs = function () {
         elementScaleValue.value = '100%';
         elementUploadFile.value = '';
@@ -197,6 +249,9 @@
         elementHashTagInput.value = '';
         elementDescriptionInput.value = '';
     };
+    /**
+     * @description Обработчик события на "Сбросить форму".
+     */
     var onReset = function () {
         flushAllNotices();
         resetInputs();

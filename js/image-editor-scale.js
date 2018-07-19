@@ -10,6 +10,10 @@
     };
     var elementImage = document.querySelector(window.library.selector.imagePreview.self);
     var elementResizeValue = document.querySelector(window.library.selector.scale.value);
+    /**
+     * @description Изменяет масштаб загружаемого изображения.
+     * @param {Number} value
+     */
     var changeResizeValue = function (value) {
         var nextValue = parseInt(elementResizeValue.value, 10) + value;
         if(nextValue >= 25 && nextValue <= 100) {
@@ -17,6 +21,10 @@
             elementImage.style = 'transform: scale(' + nextValue / 100 + ')';
         }
     };
+    /**
+     * @description Обработчик события "Изменить масштаб загружаемого изображения".
+     * @param {Event} evt
+     */
     var onClicked = function (evt) {
         var addictionalValue = AttributeValueToOperand[evt.target.dataset.operand] * STEP;
         changeResizeValue(addictionalValue);

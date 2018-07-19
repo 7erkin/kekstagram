@@ -6,6 +6,11 @@
     var elementPostForm = document.querySelector(window.library.selector.postForm);
 
     window.backend = {};
+    /**
+    * @description Загружает картинки с сервера
+    * @param {Function} onLoad Колбэк на событие загрузки данных
+    * @param {Function} onError Колбэк на событие ошибки при загрузке данных
+    */
     window.backend.downloadPictures = function (onLoad, onError) {
         var xhr = new XMLHttpRequest();
         xhr.addEventListener('load', onLoad);
@@ -16,6 +21,11 @@
 
         xhr.send();
     };
+    /**
+    * @description Отправляет данные с формы на сервер
+    * @param {Function} onLoad Колбэк на событие отправки данных
+    * @param {Function} onError Колбэк на событие ошибки при отправке данных
+    */
     window.backend.sendPicture = function (onLoad, onError) {
         var xhr = new XMLHttpRequest();
         xhr.addEventListener('load', onLoad);

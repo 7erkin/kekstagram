@@ -6,10 +6,18 @@
     var elementScalePin = document.querySelector(selector.scale.pin);
     var elementImage = document.querySelector(selector.imagePreview.self);
     var elementScaleLevel = document.querySelector(selector.scale.level);
-
+    /**
+     * @description Определяет, должен ли слайдер (глубина эффекта) спрятан.
+     * @param {String} effectName
+     * @return {Boolean}
+     */
     var shouldSliderHide = function (effectName) {
         return effectName === 'effects__preview--none';
     };
+    /**
+     * @description В зависимости от выбранного эффекта, скрывает или отображает слайдер.
+     * @param {String} effectName
+     */
     var setSlider = function (effectName) {
         if(shouldSliderHide(effectName)) {
             library.addClassTo(selector.slider ,'hidden');
@@ -17,29 +25,47 @@
         } 
         library.removeClassFrom(selector.slider ,'hidden');
     };
-    var applyEffect = function (effectName) {
+    /**
+     * @description Применяет эффект к загружаемому изображению.
+     * @param {String} effectName
+     */
+    var setEffect = function (effectName) {
         var oldEffectName = elementImage.className.match(/effects__preview--[0-9a-zA-Z]+/) || '';
         library.removeClassFrom(selector.imagePreview.self, oldEffectName[0]);;
         library.addClassTo(selector.imagePreview.self, effectName);
     };
+    /**
+     * @description Обновляет форму загрузки изображения, согласно выбранному новому эффекту.
+     * @param {HTMLElement} target
+     */
     var applyChanges = function (target) {
-        var effectName = target.className.match(/effects__preview--[0-9a-zA-Z]+/) || '';
-        applyEffect(effectName[0]);
-        setSlider(effectName[0]);
-        library.currentEffectName = effectName[0].split('--')[1]; 
+        var effectName = (target.className.match(/effects__preview--[0-9a-zA-Z]+/) || '')[0];
+        setEffect(effectName);
+        setSlider(effectName);
+        library.currentEffectName = effectName.split('--')[1]; 
     };
-    var updateStyles = function () {
+    /**
+     * @description Удаляет предыдущие примененные стили к загружаемому изображению.
+     */
+    var deletePreviousStyle = function () {
         library.removeStyleFrom(selector.imagePreview.self, 'filter');
     };
+    /**
+     * @description Перемещает ползунок слайдера в начальное положение.
+     */
     var setScalePinBasePosition = function () {
         elementScaleLevel.style.width = '100%';
         elementScalePin.style.left = library.SCALE_WIDTH + 'px';
     };
+    /**
+     * @description Обработчик на событие "Выбран очередной эффект для изображения".
+     * @param {Event} evt
+     */
     var onClicked = function (evt) {
         evt.preventDefault();
         if(evt.target.classList.contains('effects__preview')) {
             applyChanges(evt.target); 
-            updateStyles();  
+            deletePreviousStyle();  
             setScalePinBasePosition(); 
         }  
     };
