@@ -111,8 +111,8 @@
                 </fieldset>
 
                 <fieldset class="img-upload__text text">
-                  <input class="text__hashtags" name="hashtags" placeholder="#хэш-тег">
-                  <textarea class="text__description" name="description" placeholder="Ваш комментарий..."></textarea>
+                  <input class="text__hashtags" name="hashtags" data-post-form-element="hashtags" placeholder="#хэш-тег">
+                  <textarea class="text__description" name="description" data-post-form-element="description" placeholder="Ваш комментарий..."></textarea>
                 </fieldset>
 
                 <button type="submit" class="img-upload__submit" id="upload-submit">Опубликовать</button>
@@ -213,14 +213,17 @@
   <script src="js/library.js"></script>
   <script src="js/backend.js"></script>
   <script src="js/data-storage.js"></script>
-  <script src="js/photo-renderer.js"></script>
+  <script src="js/renderer-big-photo.js"></script>
+  <script src="js/renderer-small-photos.js"></script>
+  <script src="js/editor-image-effect-level.js"></script>
+  <script src="js/form-validation.js"></script>
+  <script src="js/form-notice.js"></script>
+  <script src="js/reseter-post-form.js"></script>
   <script src="js/network-handler.js"></script>
   <script src="js/form-action.js"></script>
-  <script src="js/image-editor-slider.js"></script>
-  <script src="js/form-validation.js"></script>
-  <script src="js/image-editor-scale.js"></script>
-  <script src="js/image-editor.js"></script>
-  <script src="js/picture-filtration.js"></script>
+  <script src="js/editor-image-scale.js"></script>
+  <script src="js/editor-image.js"></script>
+  <script src="js/filter-picture.js"></script>
 
 </body>
 </html>

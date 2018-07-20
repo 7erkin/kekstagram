@@ -16,9 +16,7 @@
         xhr.addEventListener('load', onLoad);
         xhr.addEventListener('error', onError);
         xhr.responseType = 'json';
-
         xhr.open('GET', URL_GET, true);
-
         xhr.send();
     };
     /**
@@ -30,11 +28,8 @@
         var xhr = new XMLHttpRequest();
         xhr.addEventListener('load', onLoad);
         xhr.addEventListener('error', onError);
-
         var data = new FormData (elementPostForm);
-
         xhr.open('POST', URL_POST, true);
-
         xhr.send(data);
     };
 })();

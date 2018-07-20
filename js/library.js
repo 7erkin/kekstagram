@@ -84,7 +84,7 @@
      * @description Удаляет все стили, которые были ранее установлены в тег элемента
      * @param {String} cssSelector селектор элемента
      */
-    window.library.flushStyle = function (cssSelector) {
+    window.library.removeStylesFrom = function (cssSelector) {
         var element = document.querySelector(cssSelector);
         element.setAttribute('style', '');
     };

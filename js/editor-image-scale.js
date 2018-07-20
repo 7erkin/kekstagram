@@ -1,3 +1,5 @@
+// Модуль определяет управление изменением масштаба загружаемого изображения.
+
 'use strict';
 
 (function () {
@@ -8,8 +10,10 @@
         minus: -1,
         plus: 1
     };
-    var elementImage = document.querySelector(window.library.selector.imagePreview.self);
-    var elementResizeValue = document.querySelector(window.library.selector.scale.value);
+    var library = window.library;
+    var selector = library.selector;
+    var elementImage = document.querySelector(selector.imagePreview.self);
+    var elementResizeValue = document.querySelector(selector.scale.value);
     /**
      * @description Изменяет масштаб загружаемого изображения.
      * @param {Number} value
@@ -18,7 +22,7 @@
         var nextValue = parseInt(elementResizeValue.value, 10) + value;
         if(nextValue >= 25 && nextValue <= 100) {
             elementResizeValue.value = nextValue + '%';
-            elementImage.style = 'transform: scale(' + nextValue / 100 + ')';
+            library.addStyleTo(selector.imagePreview.self, 'transform', 'scale(' + nextValue / 100 + ')');
         }
     };
     /**
@@ -30,6 +34,6 @@
         changeResizeValue(addictionalValue);
     };
 
-    window.library.addListenerTo(window.library.selector.scale.valueMinus, 'click', onClicked);
-    window.library.addListenerTo(window.library.selector.scale.valuePlus, 'click', onClicked);
+    library.addListenerTo(selector.scale.valueMinus, 'click', onClicked);
+    library.addListenerTo(selector.scale.valuePlus, 'click', onClicked);
 })();

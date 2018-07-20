@@ -1,11 +1,14 @@
+// Модуль определяет базовую функциональность редактора изображения
+// 1. Установка эффекта на изображение.
+// 2. Корректное отображение формы редактирования.
+// 3. Операции с формой редактирования.
+
 'use strict';
 
 (function () {
     var library = window.library;
     var selector = library.selector;
-    var elementScalePin = document.querySelector(selector.scale.pin);
     var elementImage = document.querySelector(selector.imagePreview.self);
-    var elementScaleLevel = document.querySelector(selector.scale.level);
     /**
      * @description Определяет, должен ли слайдер (глубина эффекта) спрятан.
      * @param {String} effectName
@@ -54,8 +57,8 @@
      * @description Перемещает ползунок слайдера в начальное положение.
      */
     var setScalePinBasePosition = function () {
-        elementScaleLevel.style.width = '100%';
-        elementScalePin.style.left = library.SCALE_WIDTH + 'px';
+        library.addStyleTo(selector.scale.level, 'width', '100%');
+        library.addStyleTo(selector.scale.pin, 'left', library.SCALE_WIDTH + 'px');
     };
     /**
      * @description Обработчик на событие "Выбран очередной эффект для изображения".

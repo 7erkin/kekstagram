@@ -1,3 +1,5 @@
+// Модуль определяет изменение стилей при перемещении ползунка слайдера.
+
 'use strict';
 
 (function () {
@@ -50,7 +52,7 @@
      * @description Устанавливает стили элемента уровня эффекта
      * @param {Number} nextScalePinCoord
      */
-    var setLevel = function (nextScalePinCoord) {
+    var setEffectLevelStyle = function (nextScalePinCoord) {
         elementScaleLevel.style.width = (nextScalePinCoord / window.library.SCALE_WIDTH) * 100 + '%';
     };
     /**
@@ -77,7 +79,7 @@
         var nextPinXCoord = currentPinXCoord - shift;
         if(isScalePinMoveAvailable(nextPinXCoord)) {
             elementScalePin.style.left = nextPinXCoord + 'px';
-            setLevel(nextPinXCoord);
+            setEffectLevelStyle(nextPinXCoord);
             setEffectValue(nextPinXCoord);
             setImageStyle(nextPinXCoord);
         }

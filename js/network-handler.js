@@ -8,9 +8,15 @@
      * @description Обработчик на событие "Изображение отправлено".
      * @param {Event} evt
      */
-    window.networkHandler.onImageSend = function (evt) {
-        var event = new Event('form-send');
-        document.dispatchEvent(event);
+    window.networkHandler.onImageSend = function (evt) { 
+        var xhr = evt.target;
+        switch (xhr.status) {
+            case 200:
+                window.resetPostForm();
+                break;
+            default:
+                break;
+        }
     };
     /**
      * @description Обработчик на событие "Ошибка в отправке изображения".
@@ -27,7 +33,7 @@
             case 200:
                 window.dataStorage.originalPictures = xhr.response;
                 window.dataStorage.transformPictures = xhr.response;
-                window.photoRenderer.render();
+                window.renderSmallPhotos();
                 window.library.removeClassFrom(cssSelector, cssSelector.split('.')[1]);
                 break;
             default:

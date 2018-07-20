@@ -4,7 +4,6 @@
     var QUANTITY_NEW_PICTURE = 10;
     var DELAY = 500;
 
-    var pictures = window.dataStorage.transformPictures;
     var filterSelector = window.library.selector.filter;
     var activeFilterClass = filterSelector.activeFilter.split('.')[1];
     var timerId;
